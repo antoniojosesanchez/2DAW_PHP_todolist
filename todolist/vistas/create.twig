@@ -1,0 +1,64 @@
+{% extends "template.twig" %}
+{% block main %}
+    <h1>Crear nueva tarea</h1>
+
+    <form action="{{ route("tarea.nueva") }}" method="POST">
+        <!-- Descripción -->
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea
+                    class="form-control"
+                    id="descripcion"
+                    name="descripcion"
+                    rows="3"
+                    placeholder="Describe la tarea"
+                    required></textarea>
+        </div>
+
+        <!-- Fecha -->
+        <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input
+                    type="date"
+                    class="form-control"
+                    id="fecha"
+                    name="fecha"
+                    required>
+        </div>
+
+        <!-- Completada -->
+        <div class="mb-3">
+            <label class="form-label">¿Completada?</label>
+            <div class="form-check">
+                <input
+                        class="form-check-input"
+                        type="radio"
+                        name="completada"
+                        id="completada_si"
+                        value="1"
+                        required>
+                <label class="form-check-label" for="completada_si">
+                    Sí
+                </label>
+            </div>
+            <div class="form-check">
+                <input
+                        class="form-check-input"
+                        type="radio"
+                        name="completada"
+                        id="completada_no"
+                        value="0">
+                <label class="form-check-label" for="completada_no">
+                    No
+                </label>
+            </div>
+        </div>
+
+        <!-- Botón -->
+        <div class="d-grid">
+            <button class="btn btn-success">
+                Guardar tarea
+            </button>
+        </div>
+    </form>
+{% endblock %}

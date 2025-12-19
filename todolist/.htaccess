@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# tarea/listar ====> index.php?modelo=tarea&metodo=listar
+RewriteRule ^main$          index.php?modelo=tarea&metodo=list   [QSA,L]
+RewriteRule ^logout$        index.php?modelo=auth&metodo=logout  [QSA,L]
+RewriteRule ^tarea/nueva$   index.php?modelo=tarea&metodo=create [QSA,L]

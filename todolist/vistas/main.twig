@@ -1,0 +1,28 @@
+{% extends "template.twig" %}
+{% block main %}
+        <table class="mt-4 table table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Descripción</th>
+                    <th>Completada</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for item in listado %}
+                <tr>
+                    <td>{{ item.fecha }}</td>
+                    <td>{{ item.descripcion }}</td>
+                    <td>{{ item.completada?"completada":"no completada" }}</td>
+                    <td>
+                        <a href="" class="btn btn-dark"><i class="bi bi-pencil-square"></i> Editar</a>
+                        <a href="" class="btn btn-danger"><i class="bi bi-trash"></i> Borrar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+{% endblock %}

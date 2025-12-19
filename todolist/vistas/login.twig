@@ -1,0 +1,27 @@
+{% extends "template.twig" %}
+{%  block main %}
+    <div class="card p-4 mt-4 shadow" style="width:32rem; margin:auto">
+        <h1 class="card-title text-center">📋 Todo List</h1>
+        <div class="card-body">
+            <form method="post">
+                <input class="form-control" type="email" name="email"
+                       value="david@email.com"
+                       placeholder="email@email.com" autofocus required /><br/>
+
+                <input class="form-control" type="password" name="password"
+                       placeholder="Introduce tu contraseña" required /><br/>
+
+                {% if error() %}
+                <div class="alert alert-danger">
+                    Email o contraseña incorrectos
+                </div>
+                {% endif %}
+
+                <button class="btn btn-primary w-100">Entrar</button>
+            </form>
+        </div>
+    </div>
+{%  endblock %}
+{%  block footer %}
+    <div class="mt-4" style="text-align: center;">{{ parent() }}</div>
+{% endblock %}
