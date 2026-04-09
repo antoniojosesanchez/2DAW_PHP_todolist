@@ -23,6 +23,8 @@ Después hace falta crear las tablas y cargar los datos iniciales. Para eso est�
 - Usuario: `david@email.com`
 - Contraseña: `123456`
 
+Si este repo te resulta útil o te gusta para clase, déjale una estrella ⭐ en GitHub; se agradece un montón 🙌
+
 ## Patrones de diseño utilizados
 
 - **MVC (Modelo-Vista-Controlador):** divide el software en tres capas: datos, presentación y coordinación, para que cada parte cambie con menos acoplamiento.
