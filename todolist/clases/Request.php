@@ -8,7 +8,8 @@
 			"main"   => "main",
 			"logout" => "logout",
 			
-			"tarea.nueva" => "tarea/nueva",
+			"tarea.nueva"  => "tarea/nueva",
+			"tarea.editar" => "tarea/editar",
 		] ;
 		
 		private function __construct() { }
@@ -38,6 +39,16 @@
 		public static function route(string $name): string
 		{
 			return "http://" . $_SERVER["HTTP_HOST"] . "/" . self::RUTAS[strtolower($name)] ;
+		}
+
+		/**
+		 * @param string $name
+		 * @return bool
+		 */
+		public static function isRoute(string $name): bool
+		{
+			return strtolower($name) === strtolower(ltrim(strtok($_SERVER["REQUEST_URI"], "?"),"/")) ;
+		
 		}
 		
 		/**

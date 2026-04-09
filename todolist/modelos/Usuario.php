@@ -7,6 +7,8 @@
 	
 	class Usuario
     {
+		# clave primaria de la tabla usuario
+		# utilizamos propiedad virtual para acceder a la clave primaria
         private int $idUsuario ;
 		public int $id {
 			get => $this->idUsuario ;

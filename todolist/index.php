@@ -21,7 +21,7 @@
 		endif ;
 	else:
 		if ($modelo!="auth"):
-			Auth::logout() ;
+			Sesion::close() ;
 			Request::redirect("/");
 		endif ;
 	endif ;

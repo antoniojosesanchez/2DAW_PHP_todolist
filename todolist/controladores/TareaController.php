@@ -38,4 +38,36 @@
 				
 			endif ;
 		}
+
+		/**
+		 * @return void
+		 */
+		public function editar(): void
+		{
+
+			# recuperamos la tarea
+			$tarea = Tarea::getById(Request::get("id")) ;
+
+			# si es un GET, renderizamos la vista de edición
+			if (Request::isMethod("get")):
+				$this->render("edit.twig", [ "tarea" => $tarea ]) ;
+			else:
+				# modificamos la tarea (sólo los campos permitidos)
+				$tarea->descripcion = Request::get("descripcion") ;
+				$tarea->completada = Request::get("completada") ;
+				$tarea->save() ;
+				
+				# redirigimos a la lista de tareas
+				Request::redirectToRoute("main") ;
+			endif ;
+		}
+
+		/**
+		 * @return void
+		 */
+		public function borrar(): void
+		{
+			if ($id = Request::get("id")) Tarea::borrar($id) ;
+			Request::redirectToRoute("main") ;
+		}
 	}

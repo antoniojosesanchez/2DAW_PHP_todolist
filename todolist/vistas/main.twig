@@ -13,12 +13,17 @@
 
             {% for item in listado %}
                 <tr>
-                    <td>{{ item.fecha }}</td>
+                    <td>{{ item.fecha|date("d/m/Y") }}</td>
                     <td>{{ item.descripcion }}</td>
-                    <td>{{ item.completada?"completada":"no completada" }}</td>
                     <td>
-                        <a href="" class="btn btn-dark"><i class="bi bi-pencil-square"></i> Editar</a>
-                        <a href="" class="btn btn-danger"><i class="bi bi-trash"></i> Borrar</a>
+                        {% set color = item.completada ? "bg-success" : "bg-danger" %}
+                        <div class="badge rounded-pill text-white {{ color }}">
+                            {{ item.completada ? "completada" : "no completada" }}
+                        </div>
+                    </td>
+                    <td>
+                        <a href="tarea/editar/{{ item.id }}" class="btn btn-dark"><i class="bi bi-pencil-square"></i> Editar</a>
+                        <a href="tarea/borrar/{{ item.id }}" class="btn btn-danger"><i class="bi bi-trash"></i> Borrar</a>
                     </td>
                 </tr>
             {% endfor %}

@@ -18,7 +18,7 @@
 			$loader = new \Twig\Loader\FilesystemLoader("./vistas") ;
 			
 			# Creamos el entorno TWIG
-			$this->twig = new \Twig\Environment($loader) ;
+			$this->twig = new \Twig\Environment($loader);
 			
 			# Crear una nueva funcionalidad para TWIG
 			# comprueba si hay una sesión activa
@@ -39,6 +39,11 @@
 															return Request::route($name) ;
 														}));
 			
+			# comprueba si la ruta coincide con la petición HTTP
+			$this->twig->addFunction( new \Twig\TwigFunction( "isRoute", function($name)
+														{
+															return Request::isRoute($name) ;
+														}));
 		}
 		
 		/**
