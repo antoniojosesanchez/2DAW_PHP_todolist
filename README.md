@@ -2,7 +2,7 @@
 
 Este repositorio contiene una aplicación web de tipo ToDo List, desarrollada en PHP8.4 como ejercicio práctico de clase para el ciclo formativo de Desarrollo de Aplicaciones Web (2º DAW).
 
-El objetivo principal del proyecto es poner en práctica los conceptos fundamentales del desarrollo web en el lado servidor, utilizando una arquitectura organizada y tecnologías habituales en entornos profesionales.
+El objetivo principal del proyecto es poner en práctica los conceptos fundamentales del desarrollo web en el lado servidor, utilizando una arquitectura organizada y tecnologías habituales en entornos profesionales. Las vistas HTML se separan del código PHP mediante **Twig**, que actúa como motor de plantillas.
 
 ## Puesta en marcha
 
