@@ -12,3 +12,4 @@ RUN docker-php-ext-enable pdo_mysql
 RUN a2enmod rewrite
 
 COPY --from=composer:latest /usr/bin/composer /user/bin/composer
+

@@ -70,3 +70,4 @@
 			session_destroy() ;
 		}
 	}
+

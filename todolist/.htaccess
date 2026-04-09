@@ -21,3 +21,4 @@ RewriteRule ^tarea/borrar/([1-9][0-9]*)$    index.php?modelo=tarea&metodo=borrar
 RewriteRule ^categoria/nueva$   index.php?modelo=categoria&metodo=create [QSA,L]
 RewriteRule ^categoria/editar(?:/([1-9][0-9]*))?$    index.php?modelo=categoria&metodo=editar&id=$1 [QSA,L]
 RewriteRule ^categoria/borrar/([1-9][0-9]*)$    index.php?modelo=categoria&metodo=borrar&id=$1 [QSA,L]
+
