@@ -1,5 +1,10 @@
 <?php
 
+	/**
+	 * @author Antonio José Sánchez Bujaldón
+	 * @since 2026
+	 */
+
 	namespace modelos ;
 	
 	use Modelos\Usuario ;
