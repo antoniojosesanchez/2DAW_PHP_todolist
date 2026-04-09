@@ -18,7 +18,7 @@
 		public function index(): void
 		{
 			if (Request::isMethod("get")):
-				$this->render("login.twig") ;
+				$this->render("tareas/login.twig") ;
 			else:
 				# recuperamos los parámetros
 				$email = Request::get("email") ;

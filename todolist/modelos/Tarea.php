@@ -16,11 +16,16 @@
 			get => $this->idTarea ;
 		}
 
-		private ?int $idCategoria ;
 	    private int $idUsuario ;
 	    public string $descripcion ;
 	    public bool $completada ;
-		
+
+		# propiedad virtual para acceder a la clave foránea
+		private ?int $idCategoria ;
+		public int $categoria {
+			get => $this->idCategoria ;
+			set => $this->idCategoria = $value ;
+		}
 		/**
 		 * @var string
 		 * comentamos la propiedad virtual para la fecha y la mantenemos
@@ -40,23 +45,24 @@
 		{
 			$pdo = Database::connect() ;
 			$stmt = $pdo->prepare("UPDATE tarea SET descripcion = :descripcion, 
-													completada = :completada
+													completada = :completada,
+													idCategoria = :idCategoria
 								   WHERE idTarea = :idTarea ;") ;
 								   
 			$stmt->execute([ ":descripcion" => $this->descripcion, 
 							 ":completada" => $this->completada?1:0, 
+							 ":idCategoria" => $this->categoria,
 							 ":idTarea" => $this->id ]) ;
 		}
 
 		/**
-		 * @param int $id
 		 * @return void
 		 */
-		public static function borrar(int $id): void
+		public function borrar(): void
 		{
 			$pdo = Database::connect() ;
 			$stmt = $pdo->prepare("DELETE FROM tarea WHERE idTarea = :id ;") ;
-			$stmt->execute([ ":id" => $id ]) ;
+			$stmt->execute([ ":id" => $this->id ]) ;
 		}
 		
 		/**
@@ -66,21 +72,39 @@
 		public static function create(array $datos): void
 		{
 			$pdo = Database::connect() ;
-			$stmt= $pdo->prepare("INSERT INTO tarea(idUsuario, descripcion, fecha, completada)
-									    VALUES (:idu, :descripcion, :fecha, :completada) ;") ;
-			$stmt->execute( [":idu" => Auth::user()->id, ...$datos] ) ;
+			$stmt= $pdo->prepare("INSERT INTO tarea(idUsuario, idCategoria, descripcion, fecha, completada)
+										VALUES (:idu, :idc, :descripcion, :fecha, :completada) ;") ;
+			$stmt->execute([
+				":idu"         => Auth::user()->id,
+				":idc"         => $datos["categoria"] ?? null,
+				":descripcion" => $datos["descripcion"],
+				":fecha"       => $datos["fecha"],
+				":completada"  => !empty($datos["completada"]) ? 1 : 0,
+			]) ;
 		}
 		
 		/**
 		 * @return array
 		 */
-		public static function getByUser(Usuario $usuario): array
+		public static function getByUser(Usuario $usuario, $categoria = null): array
 		{
 			$pdo = Database::connect() ;
-			$stmt = $pdo->prepare("SELECT * FROM tarea WHERE idUsuario = :idu ;") ;
- 			$stmt->execute([ ":idu" => $usuario->id ]) ;
-			 
- 			return $stmt->fetchAll(\PDO::FETCH_CLASS, Tarea::class) ;
+
+			# construimos la consulta SQL base
+			$sql = "SELECT * FROM tarea WHERE idUsuario = :idu" ;
+			$params = [ ":idu" => $usuario->id ] ;
+
+			# aplicamos el filtro de categoría solo cuando haya valor
+			if ($categoria !== null && $categoria !== ''):
+				$sql .= " AND idCategoria = :idc" ;
+				$params[":idc"] = $categoria ;
+			endif ;
+
+			# ejecutamos la consulta
+			$stmt = $pdo->prepare("{$sql} ;") ;
+			$stmt->execute($params) ;
+
+			return $stmt->fetchAll(\PDO::FETCH_CLASS, Tarea::class) ;
 		}
 
 		/**

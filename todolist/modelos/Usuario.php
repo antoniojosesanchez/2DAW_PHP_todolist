@@ -32,9 +32,9 @@
 	    /**
 	     * @return array
 	     */
-		public function tareas(): array
+		public function tareas($categoria = null): array
 		{
-			return Tarea::getByUser($this) ;
+			return Tarea::getByUser($this, $categoria) ;
 		}
 		
 		/**

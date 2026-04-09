@@ -12,10 +12,20 @@
     {%  if active() %}
     <h1 class="text-center">📋 Todo List</h1>
 
-        {% if isRoute("main") %}
-        <nav>
-            <a href="{{ route("tarea.nueva") }}" class="btn btn-primary">Nueva tarea</a>
-            <a href="{{ route("logout") }}" class="btn btn-warning">Desconectar</a>
+        {% if isRoute("main") or isRoute("categorias") %}
+        <nav class="d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-2">
+                <a href="{{ route("main") }}" class="btn btn-dark">Tareas</a>
+                <a href="{{ route("categorias") }}" class="btn btn-dark">Categorías</a>
+                <a href="{{ route("logout") }}" class="btn btn-warning">Desconectar</a>
+            </div>
+            <div>
+                {% if isRoute("categorias") %}
+                <a href="categoria/nueva" class="btn btn-primary">Nueva categoría</a>
+                {% else %}
+                <a href="{{ route("tarea.nueva") }}" class="btn btn-primary">Nueva tarea</a>
+                {% endif %}
+            </div>
         </nav>
         {% endif %}
 
@@ -27,7 +37,7 @@
 
     <footer>
         {% block footer %}
-            <p>&copy; Copyright 2026, desarrollado por <a href="">Antonio J.Sánchez</a></p>
+            <p>&copy; Copyright {{ "now"|date("Y") }}, desarrollado por <a href="">Antonio J.Sánchez</a></p>
         {% endblock %}
     </footer>
 

@@ -6,10 +6,18 @@ RewriteEngine On
 # - FLAG QSA: conserva la query original
 # - FLAG L: al coincidir la regla, Apache la aplica  y ya no evalúa las siguientes
 
-RewriteRule ^main$          index.php?modelo=tarea&metodo=list   [QSA,L]
-RewriteRule ^logout$        index.php?modelo=auth&metodo=logout  [QSA,L]
-RewriteRule ^tarea/nueva$   index.php?modelo=tarea&metodo=create [QSA,L]
 
+RewriteRule ^logout$        index.php?modelo=auth&metodo=logout  [QSA,L]
+RewriteRule ^main$          index.php?modelo=tarea&metodo=list   [QSA,L]
+RewriteRule ^categorias$    index.php?modelo=categoria&metodo=list [QSA,L]
+
+# TAREAS
 # (?:/([1-9][0-9]*))? hace opcional el tramo "/id" al final.
+RewriteRule ^tarea/nueva$   index.php?modelo=tarea&metodo=create [QSA,L]
 RewriteRule ^tarea/editar(?:/([1-9][0-9]*))?$    index.php?modelo=tarea&metodo=editar&id=$1 [QSA,L]
 RewriteRule ^tarea/borrar/([1-9][0-9]*)$    index.php?modelo=tarea&metodo=borrar&id=$1 [QSA,L]
+
+# CATEGORIAS
+RewriteRule ^categoria/nueva$   index.php?modelo=categoria&metodo=create [QSA,L]
+RewriteRule ^categoria/editar(?:/([1-9][0-9]*))?$    index.php?modelo=categoria&metodo=editar&id=$1 [QSA,L]
+RewriteRule ^categoria/borrar/([1-9][0-9]*)$    index.php?modelo=categoria&metodo=borrar&id=$1 [QSA,L]

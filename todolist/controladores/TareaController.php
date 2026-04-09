@@ -3,6 +3,7 @@
 	namespace Controladores;
 	
 	use Modelos\Tarea ;
+	use Modelos\Categoria ;
 	use Clases\Request ;
 	
 	class TareaController extends BaseController
@@ -15,9 +16,13 @@
 		 */
 		public function list(): void
 		{
-			
-			$datos = \Clases\Auth::user()->tareas() ;
-			$this->render("main.twig", [ "listado" => $datos ]) ;
+			# recuperamos la categoría seleccionada
+			$categoria = empty(Request::get("categoria")) ? null : Request::get("categoria");
+
+			$datos = \Clases\Auth::user()->tareas($categoria) ;
+			$this->render("main.twig", [ "listado" => $datos, 
+										 "categorias" => Categoria::getAll(),
+										 "categoriaSeleccionada" => $categoria ]) ;
 		}
 		
 		/**
@@ -26,12 +31,13 @@
 		public function create(): void
 		{
 			if (Request::isMethod("get")):
-				$this->render("create.twig") ;
+				$this->render("tareas/form.twig", [ "categorias" => Categoria::getAll() ]) ;
 			else:
 				
 				Tarea::create([ "descripcion" => $_POST["descripcion"],
 								"fecha"       => $_POST["fecha"],
 								"completada"  => $_POST["completada"],
+								"categoria"   => $_POST["categoria"],
 							  ]) ;
 				#
 				Request::redirectToRoute("main") ;
@@ -50,11 +56,12 @@
 
 			# si es un GET, renderizamos la vista de edición
 			if (Request::isMethod("get")):
-				$this->render("edit.twig", [ "tarea" => $tarea ]) ;
+				$this->render("tareas/form.twig", [ "tarea" => $tarea, "categorias" => Categoria::getAll() ]) ;
 			else:
 				# modificamos la tarea (sólo los campos permitidos)
 				$tarea->descripcion = Request::get("descripcion") ;
 				$tarea->completada = Request::get("completada") ;
+				$tarea->categoria = Request::get("categoria") ;
 				$tarea->save() ;
 				
 				# redirigimos a la lista de tareas
@@ -67,7 +74,11 @@
 		 */
 		public function borrar(): void
 		{
-			if ($id = Request::get("id")) Tarea::borrar($id) ;
+			if ($id = Request::get("id")):
+				if ($tarea = Tarea::getById((int)$id)):
+					$tarea->borrar() ;
+				endif ;
+			endif ;
 			Request::redirectToRoute("main") ;
 		}
 	}

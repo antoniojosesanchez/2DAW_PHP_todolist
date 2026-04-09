@@ -7,9 +7,14 @@
 		const RUTAS = [
 			"main"   => "main",
 			"logout" => "logout",
-			
+			"categorias" => "categorias",
+
 			"tarea.nueva"  => "tarea/nueva",
 			"tarea.editar" => "tarea/editar",
+
+			"categoria.nueva" => "categoria/nueva",
+			"categoria.editar" => "categoria/editar",
+			"categoria.borrar" => "categoria/borrar",
 		] ;
 		
 		private function __construct() { }

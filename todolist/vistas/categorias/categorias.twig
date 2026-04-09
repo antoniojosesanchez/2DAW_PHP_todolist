@@ -1,0 +1,32 @@
+{% extends "template.twig" %}
+{% block main %}
+    <h2 class="mt-4">Categorías</h2>
+
+    <table class="mt-3 table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Nombre</th>
+                <th style="width: 260px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categoria in categorias %}
+            <tr>
+                <td>{{ categoria.nombre }}</td>
+                <td>
+                    <a href="categoria/editar/{{ categoria.id }}" class="btn btn-dark">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    <a href="categoria/borrar/{{ categoria.id }}" class="btn btn-danger">
+                        <i class="bi bi-trash"></i> Borrar
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2" class="text-center text-muted">No hay categorías registradas.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

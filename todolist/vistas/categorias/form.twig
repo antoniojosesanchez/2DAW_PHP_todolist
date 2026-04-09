@@ -1,0 +1,27 @@
+{% extends "template.twig" %}
+{% block main %}
+    <h1>Crear nueva categoría</h1>
+
+    <form method="POST">
+        <!-- Nombre -->
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input
+                    type="text"
+                    class="form-control"
+                    id="nombre"
+                    name="nombre"
+                    value="{{ categoria.nombre|default('') }}"
+                    placeholder="Introduce el nombre de la categoría"
+                    required>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex gap-2">
+            <a href="{{ route("categorias") }}" class="btn btn-danger">Volver</a>
+            <button class="btn btn-success">
+                Guardar categoría
+            </button>
+        </div>
+    </form>
+{% endblock %}

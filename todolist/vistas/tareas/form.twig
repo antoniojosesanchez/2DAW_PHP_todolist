@@ -1,10 +1,12 @@
 {% extends "template.twig" %}
 {% block main %}
-    <h1>Editar tarea</h1>
+    {% set esEdicion = tarea is defined %}
+    <h1>{{ esEdicion ? "Editar tarea" : "Crear nueva tarea" }}</h1>
 
-    <form action="{{ route("tarea.editar") }}" method="POST">
-
+    <form action="{{ esEdicion ? route("tarea.editar") : route("tarea.nueva") }}" method="POST">
+        {% if esEdicion %}
         <input type="hidden" name="id" value="{{ tarea.id }}" />
+        {% endif %}
 
         <!-- Descripción -->
         <div class="mb-3">
@@ -15,7 +17,7 @@
                     name="descripcion"
                     rows="3"
                     placeholder="Describe la tarea"
-                    required>{{ tarea.descripcion }}</textarea>
+                    required>{{ tarea.descripcion|default('') }}</textarea>
         </div>
 
         <!-- Fecha -->
@@ -26,8 +28,20 @@
                     class="form-control"
                     id="fecha"
                     name="fecha"
-                    value="{{ tarea.fecha|date("Y-m-d") }}"
-                    readonly>
+                    value="{{ tarea.fecha|default('')|date('Y-m-d') }}"
+                    {% if esEdicion %}readonly{% endif %}
+                    required>
+        </div>
+
+        <!-- Categoría -->
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría</label>
+            <select class="form-select" id="categoria" name="categoria" required>
+                <option value="">Seleccione una categoría</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}" {{ tarea.idCategoria|default(null) == categoria.id ? 'selected' : '' }}>{{ categoria.nombre }}</option>
+                {% endfor %}
+            </select>
         </div>
 
         <!-- Completada -->
@@ -60,10 +74,11 @@
             </div>
         </div>
 
-        <!-- Botón -->
-        <div class="d-grid">
+        <!-- Botones -->
+        <div class="d-flex gap-2">
+            <a href="{{ route("main") }}" class="btn btn-danger">Volver</a>
             <button class="btn btn-success">
-                Actualizar tarea
+                {{ esEdicion ? "Actualizar tarea" : "Guardar tarea" }}
             </button>
         </div>
     </form>
